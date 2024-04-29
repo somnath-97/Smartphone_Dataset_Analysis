@@ -1,0 +1,137 @@
+USE test;
+-- Easy Level:
+
+-- Retrieve all columns for the first 10 records in the dataset.
+SELECT *
+FROM smartphones_cleaned_v6
+LIMIT 10;
+
+-- List the unique brand names present in the dataset.
+SELECT DISTINCT brand_name
+FROM smartphones_cleaned_v6;
+
+-- Find the total number of mobile phones with 5G capability.
+SELECT COUNT(*) AS Total_5G_Phones
+FROM smartphones_cleaned_v6
+WHERE has_5g = 'TRUE';
+
+
+-- Display the details of mobile phones with NFC support.
+SELECT * FROM smartphones_cleaned_v6
+WHERE has_nfc = 'TRUE';
+
+-- Retrieve mobile phones with IR blaster feature available.
+SELECT *
+FROM smartphones_cleaned_v6
+WHERE has_ir_blaster = 'TRUE';
+
+-- Calculate the average price of mobile phones, handling null values.
+SELECT AVG(COALESCE(price, 0)) AS Average_Price
+FROM smartphones_cleaned_v6;
+
+-- List the top 5 mobile phone brands with the highest ratings, handling null values.
+SELECT brand_name, AVG(COALESCE(rating, 0)) AS Average_Rating
+FROM smartphones_cleaned_v6
+GROUP BY brand_name
+ORDER BY Average_Rating DESC
+LIMIT 5;
+
+-- Find the number of mobile phones with fast charging available.
+SELECT COUNT(*) AS Phones_With_Fast_Charging
+FROM smartphones_cleaned_v6
+WHERE fast_charging_available = 1;
+
+-- Medium Level:
+
+-- Display mobile phones with RAM capacity greater than 6GB, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(ram_capacity, 0) > 6;
+
+-- Identify mobile phones with internal memory greater than 128GB, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(internal_memory, 0) > 128;
+
+-- Calculate the average screen size of mobile phones, handling null values.
+SELECT ROUND(AVG(COALESCE(screen_size, 0)),2) AS Average_Screen_Size
+FROM smartphones_cleaned_v6;
+
+-- List the top 3 mobile phones with the highest refresh rate displays, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE refresh_rate IS NOT NULL
+ORDER BY refresh_rate DESC
+LIMIT 3;
+
+-- Find mobile phones with more than 3 rear cameras, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(num_rear_cameras, 0) > 3;
+
+-- Display mobile phones with multiple front cameras available, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(num_front_cameras, 0) > 1;
+
+
+-- Retrieve mobile phones running on Android OS, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE os = 'Android';
+
+-- Hard Level:
+
+-- List mobile phones with primary rear cameras of resolution higher than 12MP.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(resolution_width, 0) * COALESCE(resolution_height, 0) > 12000000;
+
+-- Identify mobile phones with primary front cameras of resolution higher than 8MP.
+SELECT * FROM smartphones_cleaned_v6
+WHERE primary_camera_front > 8
+  AND num_front_cameras > 0;
+
+-- Display mobile phones with extended memory available.
+SELECT * FROM smartphones_cleaned_v6
+WHERE extended_memory_available = 1;
+
+-- Retrieve mobile phones with fast charging support up to 50W, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE fast_charging_available = 1 AND fast_charging > 50 ;
+
+-- Calculate the average battery capacity of mobile phones, handling null values.
+SELECT ROUND(AVG(COALESCE(battery_capacity, 0)),2) AS Average_Battery_Capacity
+FROM smartphones_cleaned_v6;
+
+-- List mobile phones with processors from snapdragon, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE processor_brand = 'snapdragon';
+
+-- Display mobile phones with processor speeds greater than 2.0 GHz, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(processor_speed, 0) > 2.0;
+
+-- Expert Level:
+
+-- Identify mobile phones with battery capacity over 4000 mAh, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(battery_capacity, 0) > 4000;
+
+-- Retrieve mobile phones with screen resolutions higher than Full HD, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(resolution_width, 0) * COALESCE(resolution_height, 0) > 1920 * 1080;
+
+-- List mobile phones with extended memory support up to 512GB, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(extended_memory_available, 0) = 1 AND COALESCE(extended_upto, 0) >= 512;
+
+-- Find mobile phones with 5G capability and NFC support, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE has_5g = 'TRUE' AND has_nfc = 'TRUE';
+
+-- Display mobile phones with fast charging available and battery capacity over 4500 mAh, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE fast_charging_available = 1 AND COALESCE(battery_capacity, 0) > 4500;
+
+-- Identify mobile phones with processor speeds over 3.0 GHz and RAM capacity over 8GB, handling null values.
+SELECT * FROM smartphones_cleaned_v6
+WHERE COALESCE(processor_speed, 0) > 3.0 AND COALESCE(ram_capacity, 0) > 8;
+
+-- Calculate the average rating of mobile phones with a price range between ₹35,000 and ₹70,000, handling null values and converting prices to Indian rupees.
+SELECT ROUND(AVG(COALESCE(rating, 0)),2) AS Average_Rating
+FROM smartphones_cleaned_v6
+WHERE COALESCE(price, 0) BETWEEN 35000 AND 70000;
